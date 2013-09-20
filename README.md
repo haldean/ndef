@@ -15,3 +15,4 @@ Android.
 
 **Nice-to-have-but-maybe-never-implemented features**
 - Integration with libnfc
+- Reading and writing other RTDs (Smart Poster, signatures, etc.)
