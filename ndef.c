@@ -7,6 +7,9 @@
 struct ndef_record* ndef_parse(char* buffer, size_t offset) {
     int i, j;
     struct ndef_record* record = malloc(sizeof(struct ndef_record));
+    if (record == NULL) {
+        return NULL;
+    }
 
     record->buffer = buffer;
 
@@ -41,14 +44,20 @@ struct ndef_record* ndef_create(
         char* type, uint8_t type_length,
         char* id, uint8_t id_length,
         char* payload, uint32_t payload_length) {
-    struct ndef_record* record = malloc(sizeof(struct ndef_record));
     int i, j;
+    struct ndef_record* record = malloc(sizeof(struct ndef_record));
+    if (record == NULL) {
+        return NULL;
+    }
 
     // one byte for header, one for type length, one or four for payload length,
     // zero or one for id length
     record->length = 2 + (is_short ? 1 : 4) + (has_id ? 1 : 0)
         + type_length + id_length + payload_length;
     record->buffer = malloc(sizeof(char) * record->length);
+    if (record->buffer == NULL) {
+        goto error;
+    }
 
     record->type_length = type_length;
     record->id_length = has_id ? id_length : 0;
@@ -94,6 +103,9 @@ struct ndef_record* ndef_create(
 
     return record;
 error:
+    if (record->buffer != NULL) {
+        free(record->buffer);
+    }
     free(record);
     return NULL;
 }
