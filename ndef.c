@@ -110,6 +110,17 @@ error:
     return NULL;
 }
 
+struct ndef_record* ndef_destroy_buffer(ndef_record*) {
+    if (record->buffer != NULL) {
+        free(record->buffer);
+    }
+    free(record);
+}
+
+struct ndef_record* ndef_destroy(ndef_record*) {
+    free(record);
+}
+
 uint8_t ndef_tnf(struct ndef_record* record) {
     return record->buffer[0] & 0x03;
 }

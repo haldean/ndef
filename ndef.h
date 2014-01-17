@@ -35,6 +35,9 @@ struct ndef_record* ndef_create(
         char* id, uint8_t id_length,
         char* payload, uint32_t payload_length);
 
+struct ndef_record* ndef_destroy_buffer(ndef_record*);
+struct ndef_record* ndef_destroy(ndef_record*);
+
 uint8_t ndef_tnf(struct ndef_record*);
 bool ndef_is_message_begin(struct ndef_record*);
 bool ndef_is_message_end(struct ndef_record*);
